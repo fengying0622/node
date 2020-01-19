@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor Sample</title>
+    <script type="text/javascript" src="WordPaster/js/jquery-1.4.min.js" charset="utf-8"></script>
+
+    <link type="text/css" rel="Stylesheet" href="/editor/WordPaster/css/WordPaster.css"/>
+    <link type="text/css" rel="Stylesheet" href="/editor/WordPaster/js/skygqbox.css" />
+    <script type="text/javascript" src="/editor/WordPaster/js/json2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/editor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/editor/WordPaster/js/w.edge.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/editor/WordPaster/js/w.app.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/editor/WordPaster/js/w.file.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/editor/WordPaster/js/skygqbox.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/editor/WordPaster/js/WordPaster.js" charset="utf-8"></script>
+</head>
+<body id="main">
+    <textarea id="editor1" name="editor1"></textarea>
+    <script type="text/javascript">
+        var pasterMgr = new WordPasterManager();
+        pasterMgr.Config["PostUrl"] = "http://localhost:3000/umeditor/up"
+        // pasterMgr.Config["Cookie"] = '<%=clientCookie%>';
+        pasterMgr.Load();//加载控件
+
+        //动态设置url
+        function setUrl(v)
+        {
+            pasterMgr.Config["PostUrl"] = "";
+            pasterMgr.Config["Cookie"] = "";
+        }
+        CKEDITOR.config.extraPlugins = 'imagepaster,netpaster';
+        //CKEditor初始化完毕
+        CKEDITOR.on( 'instanceReady', function( ev ) {
+            pasterMgr.SetEditor(ev.editor);
+        });
+        //自定义快捷键
+        CKEDITOR.config.keystrokes = [
+            [CKEDITOR.CTRL + 86/*V*/,'imagepaster']
+        ];
+        //加载CKEditor编辑器
+        CKEDITOR.replace('editor1');
+    </script>
+</body>
+</html>
